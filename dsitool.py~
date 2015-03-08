@@ -10,10 +10,8 @@ def loaddata(filename):
     # Swap data dim such that the visualization is good
     filename_short = filename[6:12]; # Use key letters to differentiate data
     if filename_short == 'exvivo':
-	data_swap = np.swapaxes(data, 0, 1);
-	data_swap = np.swapaxes(data_swap, 1, 2);
-	data_swap = data_swap[::-1,...]
-	data_swap = data_swap[:, ::-1,...]
+	datatmp = np.swapaxes(data, 0, 1);
+	data_swap = np.swapaxes(datatmp, 1, 2);
     elif filename_short == 'invivo':
 	data_swap = np.swapaxes(data, 1, 2);
 	data_swap = data_swap[::-1,...]
@@ -30,8 +28,8 @@ def loadgtab(filename):
     filename_short = filename[6:12];
     if filename_short == 'exvivo':
 	bvecstmp = np.zeros(gtab.bvecs.shape);
-	bvecstmp[:, 0] = -gtab.bvecs[:, 1];
-	bvecstmp[:, 1] = -gtab.bvecs[:, 2];
+	bvecstmp[:, 0] = gtab.bvecs[:, 1];
+	bvecstmp[:, 1] = gtab.bvecs[:, 2];
 	bvecstmp[:, 2] = gtab.bvecs[:, 0]; 
     elif filename_short == 'invivo':
 	bvecstmp = np.zeros(gtab.bvecs.shape);

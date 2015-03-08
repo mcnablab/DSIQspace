@@ -1,34 +1,31 @@
 import numpy as np
 import nibabel as nib
-import dsi4sampling as dsi
+import dsiadapt as dsi
 import dipy.core.gradients as grad
 
 def loaddata(filename):
+    # Load data
     data = nib.load('data/' + filename + '.nii.gz').get_data();
     return data
 
 def loadgtab(filename):
-    filename = filename[0:12];
+    # Load bvals and bvecs
+    filename = filename[0:12]; # Use key letters to differentiate data
     gtab = grad.gradient_table('data/' + filename + '_bvals.txt', 'data/' + filename + '_bvecs.txt');
     return gtab
 
-def loadstat(filename):
-    filename = filename[0:12];
-    if filename == 'DSI11_exvivo':
-	fov = 28.0 #um
-	mdd = 5. #um
-    elif filename == 'DSI15_exvivo':
-	fov = 39.2 #um
-	mdd = 5. #um
-    elif filename == 'DSI17_exvivo':
-	fov = 44.8 #um
-	mdd = 5. #um
-    elif filename == 'DSI11_invivo':
-	fov = 39.2 #um
-	mdd = 13.4 #um
+def loadtime(filename):
+    # Load diffusion time and gradient pulse duration time
+    filename = filename[6:12]; # Use key letters to differentiate data
+    if filename == 'exvivo':
+        bigdelta = 29.4 * 10**-3; # Unit: second
+	smalldelta = 16.7 * 10**-3;
+    elif filename == 'invivo':
+	bigdelta = 20.9 * 10**-3;
+	smalldelta = 12.9 * 10**-3;
     else:
-	print('error: no such option!!')
-    return fov, mdd
+	print('Error: no such option!!')
+    return bigdelta, smalldelta
 
 def loadroi(filename, qgridsz):
     filename1 = filename[6:15];

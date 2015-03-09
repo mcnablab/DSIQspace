@@ -151,7 +151,7 @@ class DiffusionSpectrumFit(OdfFit):
         self._peak_values = None
         self._peak_indices = None
 
-    def pdf(self, normalized=True):
+    def pdf(self, normalized=True, clipped=True):
         """ Applies the 3D FFT in the q-space grid to generate
         the diffusion propagator
         """
@@ -166,7 +166,8 @@ class DiffusionSpectrumFit(OdfFit):
         Pr = fftshift(np.real(fftn(ifftshift(Sq),
                                    3 * (self.qgrid_sz, ))))
         # clipping negative values to 0 (ringing artefact)
-        Pr = np.clip(Pr, 0, Pr.max())
+        if clipped:
+	    Pr = np.clip(Pr, 0, Pr.max())
 
         # normalize the propagator to obtain a pdf
         if normalized:
@@ -355,10 +356,9 @@ def hanning_filter(gtab, filter_width):
     # calculate r - hanning filter free parameter
     r = np.sqrt(qtable[:, 0] ** 2 + qtable[:, 1] ** 2 + qtable[:, 2] ** 2)
     # setting hanning filter width and hanning
-    # return .5 * np.cos(2 * np.pi * r / filter_width)
-    return .5 * (1 + np.cos(2 * np.pi * r / filter_width))
-    # return 1 / (.5 * (1 + np.cos(2 * np.pi * r / filter_width)))
-    # return 1
+    # return .5 * np.cos(2 * np.pi * r / filter_width) # original
+    return .5 * (1 + np.cos(2 * np.pi * r / filter_width)) # hanning
+    # return 0.54 + 0.46 * np.cos(2 * np.pi * r / filter_width) # hamming
 
 def pdf_interp_coords(sphere, rradius, origin):
     """ Precompute coordinates for ODF calculation from the PDF

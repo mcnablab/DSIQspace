@@ -56,33 +56,13 @@ def loadtime(filename):
 	print('Error: no such option!!')
     return bigdelta, smalldelta
 
-
-
-def loadfigconfig(filename):
-    filename = filename[0:12];
-    if filename == 'DSI11_exvivo':
-	fov = 28.0 #um
-	mdd = 5. #um
-    elif filename == 'DSI15_exvivo':
-	fov = 39.2 #um
-	mdd = 5. #um
-    elif filename == 'DSI17_exvivo':
-	fov = 44.8 #um
-	mdd = 5. #um
-    elif filename == 'DSI11_invivo':
-	fov = 39.2 #um
-	mdd = 13.4 #um
-    else:
-	print('error: no such option!!')
-    return fov, mdd
-
-def weightpdfslice(pdfslice):
+def weight(pdfslice, order):
     qgridsz = pdfslice.shape[0]
     center = qgridsz//2
     tmp = np.arange(qgridsz) - center
     x, y = np.meshgrid(tmp, tmp)
-    r2 = x ** 2 + y ** 2
-    weightedpdfslice = pdfslice * r2
+    r = np.sqrt(x ** 2 + y ** 2)
+    weightedpdfslice = pdfslice * r**order
     return weightedpdfslice
 
 def downsample(data, gtab, downratio):
@@ -96,7 +76,7 @@ def downsample(data, gtab, downratio):
     idxremove = np.logical_not(idxremain);
 
     subdata = data
-    subdata[..., idxremove] = 0; # Subsample the data by inserting 0 so the FOV is unchanged
+    subdata[..., idxremove] = 0; # Subsample the data by inserting 0
 
     return subdata
 
@@ -108,17 +88,4 @@ def uniquebvals(data, bvals):
         tmp = data[idx,...]
         uniqdata[i] = tmp.mean()
     return uniqdata, uniqbvals
-
-def downsample_qball(data, gtab, downratio):
-    qtable = dsi.create_qtable(gtab);
-    
-    idxremain = np.logical_or(np.logical_or(np.abs(qtable[:, 0]) == downratio, np.abs(qtable[:, 1]) == downratio), np.abs(qtable[:, 2]) == downratio);
-    
-    idxremove = np.logical_not(idxremain);
-
-    subdata = data
-    subdata[..., idxremove] = 0; # Subsample the data by inserting 0 so the FOV is unchanged
-
     return subdata
-
-

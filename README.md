@@ -1,6 +1,6 @@
-A Study of Q-Space Sampling and Truncation in Diffusion Spectrum Imaging using 300 mT/m Gradients
+Q-Space Sampling and Truncation in Diffusion Spectrum Imaging
 ===========
-Data and codes reproduce all figures used in the paper.
+Data and codes stored in this repository can be used to reproduce all figures shown in the paper.
 
 Download and install the required software:
 

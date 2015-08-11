@@ -16,7 +16,7 @@ class DiffusionSpectrumModel(OdfModel, Cache):
                  r_end=6.,
                  r_step=0.2,
                  filter_width=32,
-		 filter_type='hanning',
+                 filter_type='hanning',
                  normalize_peaks=False):
         r""" Diffusion Spectrum Imaging
 
@@ -168,7 +168,7 @@ class DiffusionSpectrumFit(OdfFit):
                                    3 * (self.qgrid_sz, ))))
         # clipping negative values to 0 (ringing artefact)
         if clipped:
-	    Pr = np.clip(Pr, 0, Pr.max())
+            Pr = np.clip(Pr, 0, Pr.max())
 
         # normalize the propagator to obtain a pdf
         if normalized:
@@ -358,15 +358,15 @@ def hanning_filter(gtab, filter_width, filter_type):
     r = np.sqrt(qtable[:, 0] ** 2 + qtable[:, 1] ** 2 + qtable[:, 2] ** 2)
     # setting hanning filter width and hanning
     if filter_type == 'none':
-	fvals = np.ones(r.shape); # no filtering 
+        fvals = np.ones(r.shape); # no filtering 
     elif filter_type == 'hanning':
         fvals = 0.5 * (1 + np.cos(2 * np.pi * r / filter_width)) # hanning
     elif filter_type == 'hamming':
-	fvals = 0.54 + 0.46 * np.cos(2 * np.pi * r / filter_width) # hamming
+        fvals = 0.54 + 0.46 * np.cos(2 * np.pi * r / filter_width) # hamming
     elif filter_type == 'blackman':
-	fvals = 0.42 + 0.5 * np.cos(2 * np.pi * r / filter_width) + 0.08 * np.cos(4 * np.pi * r / filter_width) # blackman                                                                     
+        fvals = 0.42 + 0.5 * np.cos(2 * np.pi * r / filter_width) + 0.08 * np.cos(4 * np.pi * r / filter_width) # blackman                                                                     
     else:
-	print('Error: no such option!!');
+        print('Error: no such option!!');
 
     return fvals
 

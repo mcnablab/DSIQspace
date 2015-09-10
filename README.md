@@ -5,4 +5,3 @@ Data and codes stored in this repository can be used to reproduce all figures sh
 Download and install the required software:
 
 dipy: https://github.com/nipy/dipy
-osmosis: https://github.com/vistalab/osmosis

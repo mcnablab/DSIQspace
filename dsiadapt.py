@@ -152,7 +152,7 @@ class DiffusionSpectrumFit(OdfFit):
         self._peak_values = None
         self._peak_indices = None
 
-    def pdf(self, normalized=True, clipped=True):
+    def pdf(self, normalized=False, clipped=True):
         """ Applies the 3D FFT in the q-space grid to generate
         the diffusion propagator
         """
@@ -277,8 +277,24 @@ class DiffusionSpectrumFit(OdfFit):
 
         msd = np.sum(Pr * r2) / float((gridsize ** 3))
         return msd
+    
+    def pdf_weighted(self):
+        
+        Pr = self.pdf(normalized=False, clipped=False)
+        # create the r squared 3D matrix
+        gridsize = self.qgrid_sz
+        center = gridsize // 2
+        a = np.arange(gridsize) - center
+        x = np.tile(a, (gridsize, gridsize, 1))
+        y = np.tile(a.reshape(gridsize, 1), (gridsize, 1, gridsize))
+        z = np.tile(a.reshape(gridsize, 1, 1), (1, gridsize, gridsize))
+        r2 = x ** 2 + y ** 2 + z ** 2
 
-    def odf(self, sphere, weight):
+        Pr_weighted = Pr * r2
+        
+        return Pr_weighted
+    
+    def odf(self, sphere, weight=2):
         r""" Calculates the real discrete odf for a given discrete sphere
 
         ..math::
@@ -356,7 +372,7 @@ def hanning_filter(gtab, filter_width, filter_type):
     qtable = create_qtable(gtab)
     # calculate r - hanning filter free parameter
     r = np.sqrt(qtable[:, 0] ** 2 + qtable[:, 1] ** 2 + qtable[:, 2] ** 2)
-    # setting hanning filter width and hanning
+    # setting filter and filter width
     if filter_type == 'none':
         fvals = np.ones(r.shape); # no filtering 
     elif filter_type == 'hanning':

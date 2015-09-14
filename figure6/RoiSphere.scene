@@ -1,0 +1,100 @@
+<Comment>
+	Scene file for TrackVis. Copyright (c) Ruopeng wang and Van J. Wedeen
+	DO NOT mess with this file unless you know what you are doing.
+	  * Starting from version 2.0, all the parameters are represented in LPS coordinate.
+	    So x/y/z represent L/P/S. TrackVis will make neccessary transformation when loading
+	    older scene files.
+</Comment>
+
+<Scene version="2.2">
+	<Dimension x="88" y="80" z="54" />
+	<VoxelSize x="1" y="1" z="1" />
+	<VoxelOrder current="LPS" original="RAS" />
+	<LengthUnit value="1" />
+	<TrackFile path="/data/qytian/QTResearchResult/DSIQspace/DSIQspace/figure6/RoiSphere.trk" rpath="RoiSphere.trk" />
+	<ROIs>
+		<ROI name="Sphere 1" type="Sphere" id="954259250">
+			<Center x="58" y="51" z="28" />
+			<Radius value="5.25" />
+			<Color r="97" g="255" b="119" />
+			<Opacity value="1" />
+			<Visibility value="0" />
+			<AnnotationPosition x="52.25" y="45.25" z="34.75" />
+		</ROI>
+		<ROI name="Sphere 2" type="Sphere" id="1605764286">
+			<Center x="41" y="43" z="34" />
+			<Radius value="2" />
+			<Color r="178" g="255" b="24" />
+			<Opacity value="1" />
+			<Visibility value="0" />
+			<AnnotationPosition x="44.5" y="40.5" z="31.5" />
+		</ROI>
+		<ROI name="Sphere 3" type="Sphere" id="50409645">
+			<Center x="36" y="46" z="32" />
+			<Radius value="0.75" />
+			<Color r="70" g="226" b="255" />
+			<Opacity value="1" />
+			<Visibility value="0" />
+			<AnnotationPosition x="38.25" y="44.75" z="30.75" />
+		</ROI>
+		<ROI name="Sphere 4" type="Sphere" id="100428973">
+			<Center x="38" y="47" z="30" />
+			<Radius value="1.25" />
+			<Color r="75" g="255" b="192" />
+			<Opacity value="1" />
+			<Visibility value="0" />
+			<AnnotationPosition x="40.75" y="45.25" z="28.25" />
+		</ROI>
+		<CurrentIndex value="0" />
+	</ROIs>
+	<Tracks>
+		<Track name="Track 1" id="537994220">
+			<Length low="0" high="1e+08" />
+			<Slice plane="0" number="44" thickness="1" testmode="0" enable="0" visible="1" operator="and" id="1360664532"/>
+			<Slice plane="1" number="40" thickness="1" testmode="0" enable="0" visible="1" operator="and" id="256914472"/>
+			<Slice plane="2" number="27" thickness="1" testmode="0" enable="0" visible="1" operator="and" id="1324258114"/>
+			<ROI id="954259250" testmode="3" operator="and" enable="1"/>
+			<ROI id="1605764286" testmode="3" operator="and" enable="1"/>
+			<ROI id="50409645" testmode="3" operator="and" enable="1"/>
+			<ROI id="100428973" testmode="3" operator="and" enable="1"/>
+			<Skip value="0" enable="0" />
+			<ShadingMode value="0" />
+			<Radius value="0.05" />
+			<NumberOfSides value="5" />
+			<ColorCode value="0" />
+			<OdfColorCode value="0" />
+			<SolidColor r="255" g="255" b="0" />
+			<ScalarIndex value="0" />
+			<ScalarGradient>
+				<ColorStop stop="0" r="1" g="1" b="0" />
+				<ColorStop stop="1" r="1" g="0" b="0" />
+			</ScalarGradient>
+			<Saturation value="1" />
+			<HelixPoint x="44" y="40" z="27" />
+			<HelixVector x="1" y="0" z="0" />
+			<HelixAxis visibility="1" />
+			<Visibility value="1" />
+			<AnnotationPosition x="38.5651" y="40.9049" z="25.1898" />
+		</Track>
+		<CurrentIndex value="0" />
+	</Tracks>
+	<LookUpTable>
+		<DirectionScheme value="1" />
+		<DirectionVector value="0" />
+	</LookUpTable>
+	<Coordinate>
+		<Point000 x="0" y="0" z="0" id="-1" />
+		<Point100 x="1" y="0" z="0" id="-1" />
+		<Point##0 x="0" y="1" z="0" id="-1" />
+		<Annotation type="1" />
+	</Coordinate>
+	<Camera>
+		<Position x="33.2997" y="-66.9661" z="36.661" />
+		<FocalPoint x="44" y="40" z="27" />
+		<ViewUp x="0.00809367" y="0.0891459" z="0.995986" />
+		<ViewAngle value="30" />
+		<ClippingRange near="59.002" far="170.964" />
+	</Camera>
+	<ObjectAnnotation value="1" />
+	<BackgroundColor r="0" g="0" b="0" />
+</Scene>

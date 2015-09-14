@@ -17,7 +17,8 @@ class DiffusionSpectrumModel(OdfModel, Cache):
                  r_step=0.2,
                  filter_width=32,
                  filter_type='hanning',
-                 normalize_peaks=False):
+                 normalize_peaks=False,
+                 pdfwgt=2):
         r""" Diffusion Spectrum Imaging
 
         The theoretical idea underlying this method is that the diffusion
@@ -125,6 +126,7 @@ class DiffusionSpectrumModel(OdfModel, Cache):
         b0 = np.min(self.bvals)
         self.dn = (self.bvals > b0).sum()
         self.gtab = gtab
+        self.pdfwgt=pdfwgt
 
     @multi_voxel_fit
     def fit(self, data):
@@ -294,7 +296,7 @@ class DiffusionSpectrumFit(OdfFit):
         
         return Pr_weighted
     
-    def odf(self, sphere, weight=2):
+    def odf(self, sphere):
         r""" Calculates the real discrete odf for a given discrete sphere
 
         ..math::
@@ -317,7 +319,7 @@ class DiffusionSpectrumFit(OdfFit):
         Pr = self.pdf()
 
         # calculate the orientation distribution function
-        return pdf_odf(Pr, self.model.qradius, interp_coords, weight)
+        return pdf_odf(Pr, self.model.qradius, interp_coords, self.model.pdfwgt)
 
 
 def create_qspace(gtab, origin):
@@ -405,7 +407,7 @@ def pdf_interp_coords(sphere, rradius, origin):
     return interp_coords
 
 
-def pdf_odf(Pr, rradius, interp_coords, weight):
+def pdf_odf(Pr, rradius, interp_coords, pdfwgt):
     r""" Calculates the real ODF from the diffusion propagator(PDF) Pr
 
     Parameters
@@ -418,7 +420,7 @@ def pdf_odf(Pr, rradius, interp_coords, weight):
         coordinates in the pdf for interpolating the odf
     """
     PrIs = map_coordinates(Pr, interp_coords, order=1)
-    odf = (PrIs * (rradius ** weight)).sum(-1)
+    odf = (PrIs * (rradius ** pdfwgt)).sum(-1)
     # odf = (PrIs * rradius ** 2).sum(-1)
     # odf = (PrIs * rradius).sum(-1)
     return odf

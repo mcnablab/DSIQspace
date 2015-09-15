@@ -9,7 +9,7 @@ clear, clc, close all
 cd(fileparts(which('s_CropTrack.m')));
 
 %%
-files = dir('../*.png');
+files = dir('../track_newsphere*.png');
 croppath = 'croppedimg';
 mkdir(croppath);
 
@@ -19,6 +19,6 @@ for imgNum = 1 : length(files)
     img = imread(fullfile('..', imgName));
 %     figure, imshow(img);
     
-    imgcrop = img(60 : 1825, 760 : 2340, :);
+    imgcrop = img(100 : 3160, 1230 : 3850, :);
     imwrite(imgcrop, fullfile(croppath, ['crop_' imgName]));
 end % end imgNum

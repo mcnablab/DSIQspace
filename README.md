@@ -10,6 +10,10 @@ Please cite the reference below if you are using the codes.
 
 Tian Q, Rokem A, Folkerth RD, Nummenmaa A, Fan Q, Edlow BL, McNab JA. Q-Space Truncation and Sampling in Diffusion Spectrum Imaging. Magnetic Resonance in Medicine, 13 JAN 2016, DOI: 10.1002/mrm.26071
 
+
+
+
+
 Qiyuan Tian
 
 McNab Lab of RSL, Stanford University
